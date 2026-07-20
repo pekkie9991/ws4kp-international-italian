@@ -13,7 +13,7 @@ import ConversionHelpers from './utils/conversionHelpers.mjs';
 
 class MarineForecast extends WeatherDisplay {
 	constructor(navId, elemId, defaultActive) {
-		super(navId, elemId, 'Marine Forecast', defaultActive);
+		super(navId, elemId, 'Previsioni Marine', defaultActive);
 		this.backgroundImage = loadImg('images/BackGround8_1.png');
 	}
 
@@ -55,8 +55,8 @@ class MarineForecast extends WeatherDisplay {
 
 		return {
 			windSpeed: {
-				today: averageTodayWindSpeed,
-				tonight: averageTonightWindSpeed,
+				oggi: averageTodayWindSpeed,
+				notte: averageTonightWindSpeed,
 			},
 		};
 	}
@@ -92,8 +92,8 @@ class MarineForecast extends WeatherDisplay {
 			if (titleContainer.querySelectorAll('div').length === 0) {
 				const titleContainerReplacementHtml = `
 					<div class="title-container">
-						<div class="title">WINDS:</div>
-						<div class="title seas">SEAS:</div>
+						<div class="title">VENTO:</div>
+						<div class="title seas">MARE:</div>
 					</div>`;
 				titleContainer.innerHTML = titleContainerReplacementHtml;
 			}
@@ -112,7 +112,7 @@ class MarineForecast extends WeatherDisplay {
 			this.finishDraw();
 			return;
 		}
-		const waveConditionText = this.marineData.map((period) => calculateSeasCondition(period).toUpperCase());
+		const waveConditionText = this.marineData.map((period) => translateSeasCondition(calculateSeasCondition(period).toUpperCase()));
 
 		const time = new Date();
 		const isAfterFivePM = time.getHours() >= 17;
@@ -124,11 +124,14 @@ class MarineForecast extends WeatherDisplay {
 
 		// create each day template
 		const days = this.marineData.map((period, index) => {
+			const key = period.text.toLowerCase();
+			const windSpeedObj = this.data.windSpeed[key] || { min: 0, max: 0 };
+
 			const fill = {
 				'wave-icon': { type: 'img', src: getWaveIconFromCondition(waveConditionText[index]) },
 				date: period.text,
 				'wind-direction': period.windWaveDirection,
-				'wind-speed': `${this.data.windSpeed[period.text.toLowerCase()].min}-${this.data.windSpeed[period.text.toLowerCase()].max}${ConversionHelpers.getMarineWindUnitText()}`,
+				'wind-speed': `${windSpeedObj.min}-${windSpeedObj.max}${ConversionHelpers.getMarineWindUnitText()}`,
 				'wave-height': `${ConversionHelpers.convertWaveHeightUnits(period.waveHeight)}${ConversionHelpers.getWaveHeightUnitText()}`,
 				'wave-condition': `${waveConditionText[index]}`,
 			};
@@ -156,6 +159,21 @@ class MarineForecast extends WeatherDisplay {
 	}
 }
 
+const translateSeasCondition = (condition) => {
+	const map = {
+		CALM: 'CALMO',
+		SMOOTH: 'QUASI CALMO',
+		SLIGHT: 'POGO MOSSO',
+		MODERATE: 'MOSSO',
+		ROUGH: 'MOLTO MOSSO',
+		'VERY ROUGH': 'AGGITATO',
+		HIGH: 'MOLTO AGITATO',
+		VERY_HIGH: 'GROSSO',
+		PHENOMENAL: 'MOLTO GROSSO',
+	};
+	return map[condition] || condition;
+};
+
 const aggregateHourlyData = (hourlyDataArray, startingPosition, endingPosition) => {
 	if (!hourlyDataArray || hourlyDataArray.length === 0) {
 		console.error('MarineForecast: aggregateHourlyData() - No hourly data available for aggregation');
@@ -173,9 +191,9 @@ const aggregateHourlyData = (hourlyDataArray, startingPosition, endingPosition) 
 const parseMarineData = (weatherParameters) => {
 	const aggregatedMarineforecast = [];
 
-	// construct "today" object
+	// construct "Oggi" object
 	const today = {
-		text: 'Today',
+		text: 'Oggi',
 		swellWaveDirection: directionToNSEW(Math.floor(aggregateHourlyData(weatherParameters.hourly.swell_wave_direction, 0, 11))),
 		swellWaveHeight: aggregateHourlyData(weatherParameters.hourly.swell_wave_height, 0, 11),
 		swellWavePeriod: aggregateHourlyData(weatherParameters.hourly.swell_wave_period, 0, 11),
@@ -183,9 +201,9 @@ const parseMarineData = (weatherParameters) => {
 		windWaveDirection: directionToNSEW(Math.floor(aggregateHourlyData(weatherParameters.hourly.wind_wave_direction, 0, 11))),
 	};
 
-	// construct "tonight" object
+	// construct "Notte" object
 	const tonight = {
-		text: 'Tonight',
+		text: 'Notte',
 		swellWaveDirection: directionToNSEW(Math.floor(aggregateHourlyData(weatherParameters.hourly.swell_wave_direction, 12, 23))),
 		swellWaveHeight: aggregateHourlyData(weatherParameters.hourly.swell_wave_height, 12, 23),
 		swellWavePeriod: aggregateHourlyData(weatherParameters.hourly.swell_wave_period, 12, 23),
