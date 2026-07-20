@@ -55,10 +55,10 @@ const drawScreen = async () => {
 const screens = [
 	// station name
 	(data) => {
-		let sanitizedText = 'Conditions at ';
+		let sanitizedText = 'Condizioni a ';
 		// Typically an airport with "International" at the second position
 		if (data.city.split(' ').length > 2 && data.city.split(' ')[1].toLowerCase() === 'international') {
-			sanitizedText += `${data.city.split(' ')[0]} Intl. ${data.city.split(' ')[2]} `;
+			sanitizedText += `${data.city.split(' ')[0]} Int. ${data.city.split(' ')[2]} `;
 		// or a very long city name...this will
 		// truncate very long airports too, like
 		// "John F. Kennedy International Airport"
@@ -71,7 +71,7 @@ const screens = [
 	},
 
 	// condition
-	(data) => `Condition: ${getConditionText(data.TextConditions)}`,
+	(data) => `Condizione: ${getConditionText(data.TextConditions)}`,
 
 	// temperature
 	(data) => {
@@ -80,19 +80,19 @@ const screens = [
 	},
 
 	// humidity
-	(data) => `Humidity: ${data.Humidity}%   Dewpoint: ${data.DewPoint}${degree}${data.TemperatureUnit}`,
+	(data) => `Umidità: ${data.Humidity}%   Punto di rugiada: ${data.DewPoint}${degree}${data.TemperatureUnit}`,
 
 	// barometric pressure
-	(data) => `Barometric Pressure: ${data.Pressure} ${data.PressureUnit}`,
+	(data) => `Pressione barometrica: ${data.Pressure} ${data.PressureUnit}`,
 
 	// wind
 	(data) => {
 		let text = data.WindSpeed > 0
-			? `Wind: ${data.WindDirection} ${data.WindSpeed} ${data.WindUnit}`
-			: 'Wind: Calm';
+			? `Vento: ${data.WindDirection} ${data.WindSpeed} ${data.WindUnit}`
+			: 'Vento: Calmo';
 
 		if (data.WindGust > 0) {
-			text += `   Gusts to ${data.WindGust}`;
+			text += `   Raffica ${data.WindGust}`;
 		}
 		return text;
 	},
@@ -100,7 +100,7 @@ const screens = [
 	// visibility
 	(data) => {
 		const distance = `${data.Ceiling} ${data.CeilingUnit}`;
-		return `Visib: ${data.Visibility} ${data.VisibilityUnit}   Ceiling: ${data.Ceiling === 0 ? 'Unlimited' : distance}`;
+		return `Visib: ${data.Visibility} ${data.VisibilityUnit}   QFU/Copertura: ${data.Ceiling === 0 ? 'Illimitata' : distance}`;
 	},
 ];
 
