@@ -8,7 +8,7 @@ import { generateLocalForecast } from './utils/localForecastTextGenerator.mjs';
 // 3 days, morning night; including the current day's morning/night
 class LocalForecast extends WeatherDisplay {
 	constructor(navId, elemId) {
-		super(navId, elemId, 'Local Forecast', true);
+		super(navId, elemId, 'Previsioni Locali', true);
 
 		// set timings
 		this.timing.baseDelay = 5000;
