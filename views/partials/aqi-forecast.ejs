@@ -1,15 +1,15 @@
-<%- include('header.ejs', { titleDual:{ top: 'Air Quality' , bottom: 'Today' }, noaaLogo: false, hasTime: true }) %>
+<%- include('header.ejs', { titleDual:{ top: 'Qualità Aria' , bottom: 'Oggi' }, noaaLogo: false, hasTime: true }) %>
 <div class="main has-scroll aqi-forecast">
 
     <div class="ratings-container">
-        <div class="rating">HAZARDOUS</div>
-        <div class="rating">VERY UNHEALTHY</div>
-        <div class="rating">UNHEALTHY</div>
-        <div class="rating">GOOD</div>
+        <div class="rating">PERICOLOSA</div>
+        <div class="rating">MOLTO MALSANA</div>
+        <div class="rating">MALSANA</div>
+        <div class="rating">BUONA</div>
     </div>
 
     <div class="api-failure-container">
-        <div class="message">AQI FAILURE</div>
+        <div class="message">ERRORE AQI</div>
     </div>
 
     <div class="aqi-container">
