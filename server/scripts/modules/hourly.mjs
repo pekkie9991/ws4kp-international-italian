@@ -14,7 +14,7 @@ import ConversionHelpers from './utils/conversionHelpers.mjs';
 class Hourly extends WeatherDisplay {
 	constructor(navId, elemId, defaultActive) {
 		// special height and width for scrolling
-		super(navId, elemId, 'Hourly Forecast', defaultActive);
+		super(navId, elemId, 'Previsioni Orarie', defaultActive);
 
 		// set up the timing
 		this.timing.baseDelay = 20;
@@ -44,12 +44,18 @@ class Hourly extends WeatherDisplay {
 		if (this.data) this.drawLongCanvas();
 	}
 
+	async drawCanvas() {
+		// Imposta il locale in italiano per le date di Luxon
+		DateTime.local().setLocale('it');
+	}
+
 	async drawLongCanvas() {
 		// get the list element and populate
 		const list = this.elem.querySelector('.hourly-lines');
 		list.innerHTML = '';
 
-		const startingHour = DateTime.local();
+		// Usa il formato italiano per le date/ore
+		const startingHour = DateTime.local().setLocale('it');
 
 		const lines = this.data.map((data, index) => {
 			const fillValues = {};
@@ -68,7 +74,7 @@ class Hourly extends WeatherDisplay {
 			if (temperature !== feelsLike) fillValues.like = feelsLike;
 
 			// wind
-			let wind = 'Calm';
+			let wind = 'Calmo';
 			if (data.windSpeed > 0) {
 				const windSpeed = Math.round(ConversionHelpers.convertWindUnits(data.windSpeed)).toString();
 				const windDirection = directionToNSEW(data.windDirection);
