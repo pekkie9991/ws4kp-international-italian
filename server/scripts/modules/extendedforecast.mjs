@@ -11,7 +11,7 @@ import ConversionHelpers from './utils/conversionHelpers.mjs';
 
 class ExtendedForecast extends WeatherDisplay {
 	constructor(navId, elemId) {
-		super(navId, elemId, 'Extended Forecast', true);
+		super(navId, elemId, 'Previsioni Estese', true);
 
 		// set timings
 		this.timing.totalScreens = 2;
@@ -31,9 +31,9 @@ class ExtendedForecast extends WeatherDisplay {
 
 		// Special case for thunderstorm(s), as
 		// it clips into the other day panels
-		if (text.toLowerCase() === 'thunderstorm') {
+		if (text.toLowerCase() === 'temporale') {
 			// special case for thunderstorms
-			sanitizedText = 'Thunder';
+			sanitizedText = 'Temp.';
 			return sanitizedText;
 		}
 
@@ -94,7 +94,7 @@ const parse = (fullForecast) => {
 			text,
 			icon: getWeatherIconFromIconLink(text, fullForecast.timeZone, true),
 			date,
-			dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
+			dayName: date.toLocaleDateString('it-IT', { weekday: 'long' }),
 			high: ConversionHelpers.convertTemperatureUnits(period.temperature_2m_max),
 			low: ConversionHelpers.convertTemperatureUnits(period.temperature_2m_min),
 		};
