@@ -92,19 +92,19 @@ const getGeocoding = async (name) => {
 };
 
 const weatherConditions = [
-	{ codes: [0], text: ['Clear sky'] },
-	{ codes: [1, 2, 3], text: ['Mainly clear', 'Partly cloudy', 'Overcast'] },
-	{ codes: [45, 48], text: ['Fog', 'Depositing rime fog'] },
-	{ codes: [51, 53, 55], text: ['Light Drizzle', 'Moderate Drizzle', 'Dense Drizzle'] },
-	{ codes: [56, 57], text: ['Light Freezing Drizzle', 'Dense Freezing Drizzle'] },
-	{ codes: [61, 63, 65], text: ['Slight Rain', 'Moderate Rain', 'Heavy Rain'] },
-	{ codes: [66, 67], text: ['Light Freezing Rain', 'Heavy Freezing Rain'] },
-	{ codes: [71, 73, 75], text: ['Slight Snow fall', 'Moderate Snow fall', 'Heavy Snow fall'] },
-	{ codes: [77], text: ['Snow grains'] },
-	{ codes: [80, 81, 82], text: ['Slight Rain showers', 'Moderate Rain showers', 'Violent Rain showers'] },
-	{ codes: [85, 86], text: ['Slight Snow showers', 'Heavy Snow Showers'] },
-	{ codes: [95], text: ['Thunderstorm'] },
-	{ codes: [96, 99], text: ['Thunderstorm with slight hail', 'Thunderstorm with heavy hail'] },
+	{ codes: [0], text: ['Sereno'] },
+	{ codes: [1, 2, 3], text: ['Prevalentemente sereno', 'Parzialmente nuvoloso', 'Coperto'] },
+	{ codes: [45, 48], text: ['Nebbia', 'Nebbia con brina'] },
+	{ codes: [51, 53, 55], text: ['Pioviggine leggera', 'Pioviggine moderata', 'Pioviggine fitta'] },
+	{ codes: [56, 57], text: ['Pioviggine gelata leggera', 'Pioviggine gelata intensa'] },
+	{ codes: [61, 63, 65], text: ['Pioggia debole', 'Pioggia moderata', 'Pioggia forte'] },
+	{ codes: [66, 67], text: ['Pioggia gelata leggera', 'Pioggia gelata forte'] },
+	{ codes: [71, 73, 75], text: ['Nevicata debole', 'Nevicata moderata', 'Nevicata abbondante'] },
+	{ codes: [77], text: ['Granelli di neve'] },
+	{ codes: [80, 81, 82], text: ['Rovesci di pioggia deboli', 'Rovesci di pioggia moderati', 'Rovesci di pioggia violenti'] },
+	{ codes: [85, 86], text: ['Rovesci di neve deboli', 'Rovesci di neve forti'] },
+	{ codes: [95], text: ['Temporale'] },
+	{ codes: [96, 99], text: ['Temporale con grandine debole', 'Temporale con grandine forte'] },
 ];
 
 const getConditionText = (code) => {
