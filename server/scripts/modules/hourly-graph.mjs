@@ -10,7 +10,7 @@ import ConversionHelpers from './utils/conversionHelpers.mjs';
 
 class HourlyGraph extends WeatherDisplay {
 	constructor(navId, elemId, defaultActive) {
-		super(navId, elemId, 'Hourly Graph', defaultActive);
+		super(navId, elemId, 'Grafico Orario', defaultActive);
 
 		// move the top right data into the correct location on load
 		document.addEventListener('DOMContentLoaded', () => {
@@ -65,7 +65,7 @@ class HourlyGraph extends WeatherDisplay {
 
 		// calculate time scale
 		const timeScale = calcScale(0, 5, this.data.temperature.length - 1, availableWidth);
-		const startTime = DateTime.now().startOf('hour');
+		const startTime = DateTime.now().startOf('hour').setLocale('it');
 		if (ConversionHelpers.getHoursFormat() === '12-hour') {
 			document.querySelector('.x-axis .l-1').innerHTML = formatTime(startTime);
 			document.querySelector('.x-axis .l-2').innerHTML = formatTime(startTime.plus({ hour: 6 }));
